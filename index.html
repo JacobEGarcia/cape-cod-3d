@@ -193,10 +193,10 @@ function codTexture(){
   const cv=document.createElement('canvas'); cv.width=256; cv.height=128;
   const g=cv.getContext('2d');
   const gr=g.createLinearGradient(0,0,0,128);
-  gr.addColorStop(0,'#556048'); gr.addColorStop(.6,'#5f6a46'); gr.addColorStop(1,'#8a8468');
+  gr.addColorStop(0,'#6a7050'); gr.addColorStop(.6,'#7a7c58'); gr.addColorStop(1,'#9a9478');
   g.fillStyle=gr; g.fillRect(0,0,256,128);
   for(let i=0;i<240;i++){ // mottling
-    g.fillStyle=`rgba(${40+Math.random()*40|0},${50+Math.random()*30|0},30,${.12+Math.random()*.2})`;
+    g.fillStyle=`rgba(${60+Math.random()*40|0},${64+Math.random()*30|0},40,${.12+Math.random()*.2})`;
     g.beginPath(); g.arc(Math.random()*256,Math.random()*80,2+Math.random()*6,0,7); g.fill();
   }
   g.strokeStyle='rgba(240,238,220,.7)'; g.lineWidth=2.5;  // lateral line
@@ -223,24 +223,23 @@ const codBody=new THREE.Group(); cod.add(codBody);
       new THREE.MeshStandardMaterial({color:0x5a6242,side:THREE.DoubleSide,transparent:true,opacity:.9}));
     fin.position.set(s*.3,-.05,-.9); fin.rotation.z=s*.7; codBody.add(fin);
   }
-  const dorsal=new THREE.Mesh(new THREE.PlaneGeometry(.8,.22),
+  const dorsal=new THREE.Mesh(new THREE.PlaneGeometry(.55,.2),
     new THREE.MeshStandardMaterial({color:0x5a6242,side:THREE.DoubleSide,transparent:true,opacity:.9}));
   dorsal.position.set(0,.32,-.6); codBody.add(dorsal);
   const barbel=new THREE.Mesh(new THREE.CylinderGeometry(.012,.006,.12,6),
     new THREE.MeshStandardMaterial({color:0xc8c0a0}));
   barbel.position.set(0,-.14,-1.62); codBody.add(barbel);
 }
-const tail=new THREE.Group(); tail.position.set(0,0,.02); codBody.add(tail);
+const tail=new THREE.Group(); tail.position.set(0,0,.04); codBody.add(tail);
 {
-  const tailM=new THREE.MeshStandardMaterial({color:0x5a6242,side:THREE.DoubleSide,transparent:true,opacity:.92});
-  const upper=new THREE.Mesh(new THREE.PlaneGeometry(.08,.5),tailM);
-  upper.position.set(0,.2,.06); upper.rotation.z=.5;
-  const lower=upper.clone(); lower.position.y=-.2; lower.rotation.z=-.5;
-  const finG=new THREE.Group(); finG.add(upper,lower); finG.position.x=0;
-  tail.add(finG);
+  const tailM=new THREE.MeshStandardMaterial({color:0x7a7c58,side:THREE.DoubleSide,transparent:true,opacity:.95});
+  // vertical fan spanning Y, extending back along Z - reads as a fin from the side, a thin line from behind
+  const fan=new THREE.Mesh(new THREE.PlaneGeometry(.55,.5),tailM);
+  fan.geometry.rotateY(Math.PI/2);
+  fan.position.set(0,0,.3);
+  const fan2=fan.clone(); fan2.rotation.y=.16; fan2.scale.set(.9,.8,1);
+  tail.add(fan,fan2);
 }
-// fix tail orientation: attach at rear (lathe tail end at z=0 side)
-tail.position.set(0,0,-.02);
 
 // ---------- bubbles ----------
 const bubbles=[];
@@ -451,4 +450,3 @@ addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updat
 </script>
 </body>
 </html>
-
