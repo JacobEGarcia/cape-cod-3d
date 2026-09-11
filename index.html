@@ -220,12 +220,16 @@ const codBody=new THREE.Group(); cod.add(codBody);
     const eye=new THREE.Mesh(new THREE.SphereGeometry(.055,10,8),new THREE.MeshBasicMaterial({color:0x0a0f08}));
     eye.position.set(s*.16,.12,-1.5); codBody.add(eye);
     const fin=new THREE.Mesh(new THREE.PlaneGeometry(.3,.16),
-      new THREE.MeshStandardMaterial({color:0x5a6242,side:THREE.DoubleSide,transparent:true,opacity:.9}));
+      new THREE.MeshStandardMaterial({color:0x7a7c58,side:THREE.DoubleSide,transparent:true,opacity:.9}));
     fin.position.set(s*.3,-.05,-.9); fin.rotation.z=s*.7; codBody.add(fin);
   }
   const dorsal=new THREE.Mesh(new THREE.PlaneGeometry(.55,.2),
-    new THREE.MeshStandardMaterial({color:0x5a6242,side:THREE.DoubleSide,transparent:true,opacity:.9}));
+    new THREE.MeshStandardMaterial({color:0x7a7c58,side:THREE.DoubleSide,transparent:true,opacity:.92}));
+  dorsal.geometry.rotateY(Math.PI/2);
   dorsal.position.set(0,.32,-.6); codBody.add(dorsal);
+  const dorsal2=new THREE.Mesh(new THREE.PlaneGeometry(.4,.14),dorsal.material);
+  dorsal2.geometry.rotateY(Math.PI/2);
+  dorsal2.position.set(0,.3,-.05); codBody.add(dorsal2);
   const barbel=new THREE.Mesh(new THREE.CylinderGeometry(.012,.006,.12,6),
     new THREE.MeshStandardMaterial({color:0xc8c0a0}));
   barbel.position.set(0,-.14,-1.62); codBody.add(barbel);
